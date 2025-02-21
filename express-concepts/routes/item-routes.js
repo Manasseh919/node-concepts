@@ -1,5 +1,5 @@
 const express = require("express");
-const { asyncHandler } = require("../middleware/errorHandler.js");
+const { asyncHandler, APIError } = require("../middleware/errorHandler.js");
 
 const router = express.Router();
 
@@ -33,4 +33,20 @@ router.get(
   })
 );
 
-module.exports =  router ;
+router.post(
+  "/items",
+  asyncHandler(async (req, res) => {
+    if (!req.body.name) {
+      throw new APIError("Item name is required", 400);
+    }
+    const newItem = {
+      id: items.length + 1,
+      name: req.body.name,
+    };
+
+    items.push(newItem);
+    res.status(201).json(newItem);
+  })
+);
+
+module.exports = router;

@@ -22,7 +22,7 @@ app.use(requestLogger);
 app.use(addTimeStamp);
 
 app.use(configureCors());
-app.use(createBasicRateLimiter(100, 15 * 60 * 1000));
+app.use(createBasicRateLimiter(2, 15 * 60 * 1000));
 app.use(express.json());
 
 app.use( urlVersioning("v1"));
