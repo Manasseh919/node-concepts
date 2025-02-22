@@ -20,6 +20,19 @@ async function testRedisConnection() {
     const extractValue = await client.get("key");
 
     console.log(extractValue);
+
+    const deleteCount = await client.del("key");
+    console.log(deleteCount);
+
+    const extractUpdatedValue = await client.get("key");
+    console.log(extractUpdatedValue);
+
+    await client.set("count", "100");
+    const incrementcount = await client.incr("count");
+    console.log(incrementcount);
+
+    const decremetnCount = await client.decr("count");
+    console.log(decremetnCount);
   } catch (error) {
     console.error(error);
   } finally {
