@@ -37,6 +37,16 @@ const redisDataStructures = async () => {
     console.log(email, age, country);
 
     //lists => LPUSH,RPUSH,LRANGE,LPOP,RPOP
+
+    await client.lPush("notes", ["note 1", "note 2", "note 3"]);
+    const extractAllNotes = await client.lRange("notes", 0, -1);
+    console.log(extractAllNotes);
+
+    const firstNOte = await client.lPop("notes");
+    console.log(firstNOte);
+
+    const remainingNOtes = await client.lRange("notes", 0, -1);
+    console.log(remainingNOtes)
   } catch (error) {
     console.log(error);
   } finally {
