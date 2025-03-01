@@ -48,19 +48,45 @@ const redisDataStructures = async () => {
     // const remainingNOtes = await client.lRange("notes", 0, -1);
     // console.log(remainingNOtes)
 
-
     //sets -> SADD,SMEMBERS,SISMEMBER,SREM
 
-    await client.sAdd('user:nickName',['john','varun','xyz'])
-    const extractUserUniquenames = await client.sMembers('user:nickName')
-    console.log(extractUserUniquenames)
+    // await client.sAdd('user:nickName',['john','varun','xyz'])
+    // const extractUserUniquenames = await client.sMembers('user:nickName')
+    // console.log(extractUserUniquenames)
 
-    const isVarunOneOfUserNickName = await client.sIsMember('user:nickName','john')
-    console.log(isVarunOneOfUserNickName)
+    // const isVarunOneOfUserNickName = await client.sIsMember('user:nickName','john')
+    // console.log(isVarunOneOfUserNickName)
 
-    await client.sRem('user:nickName','xyz')
-    const getUPdatedUserNickNames = await client.sMembers("user:nickName")
-    console.log(getUPdatedUserNickNames)
+    // await client.sRem('user:nickName','xyz')
+    // const getUPdatedUserNickNames = await client.sMembers("user:nickName")
+    // console.log(getUPdatedUserNickNames)
+
+    //sorted sets
+    //ZADD, ZRANGE,ZRANK,ZREM
+
+    await client.zAdd("cart", [
+      {
+        score: 100,
+        value: "cart 1",
+      },
+      {
+        score: 150,
+        value: "cart 2",
+      },
+      {
+        score: 10,
+        value: "cart 3",
+      },
+    ]);
+    const getTopCartItems = await client.zRange('cart',0,-1)
+    console.log(getTopCartItems)
+
+    const extractAllcartItemsithscore = await client.zRangeWithScores('cart',0,-1)
+    console.log(extractAllcartItemsithscore)
+
+    const cartTWoRank = await client.zRank('cart','cart 2')
+    console.log(cartTWoRank)
+
   } catch (error) {
     console.log(error);
   } finally {
